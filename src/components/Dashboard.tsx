@@ -57,48 +57,44 @@ export function Dashboard({ session }: Props) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <span className="text-xl font-bold text-gray-900 tracking-tight">
-          Complify
-        </span>
+      <header className="bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <span className="text-sm font-semibold text-gray-900">Complify</span>
+        </div>
+
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600">{session.user?.email}</span>
+          <span className="text-xs text-gray-400">{session.user?.email}</span>
           <button
             onClick={() => signOut()}
-            className="text-sm text-gray-500 hover:text-gray-800 transition-colors"
+            className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
           >
             Sign out
           </button>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8 flex flex-col gap-6">
+      <main className="max-w-3xl mx-auto px-6 py-10 flex flex-col gap-6">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-semibold text-gray-900">
-              Imported Files
-            </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
-              Select files from Google Drive to import, cache, and summarize.
-            </p>
-          </div>
+          <h1 className="text-base font-semibold text-gray-900">Your files</h1>
           <div className="flex items-center gap-3">
             {importing && (
-              <span className="text-sm text-blue-600 flex items-center gap-2">
+              <span className="text-xs text-indigo-500 flex items-center gap-1.5">
                 <Spinner />
                 Importing…
               </span>
             )}
-            <GooglePicker
-              onFilesPicked={handleFilesPicked}
-              disabled={importing}
-            />
+            <GooglePicker onFilesPicked={handleFilesPicked} disabled={importing} />
           </div>
         </div>
 
         {importError && (
-          <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg flex items-start gap-2">
-            <span className="font-medium">Import error:</span> {importError}
+          <div className="bg-red-50 border border-red-100 text-red-600 text-xs px-4 py-3 rounded-xl flex items-center gap-2">
+            <span>{importError}</span>
             <button
               onClick={() => setImportError(null)}
               className="ml-auto text-red-400 hover:text-red-600"
@@ -116,24 +112,9 @@ export function Dashboard({ session }: Props) {
 
 function Spinner() {
   return (
-    <svg
-      className="w-4 h-4 animate-spin text-blue-600"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8v8z"
-      />
+    <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
     </svg>
   );
 }

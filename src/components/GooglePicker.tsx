@@ -78,7 +78,7 @@ export function GooglePicker({ onFilesPicked, disabled }: Props) {
     <button
       onClick={openPicker}
       disabled={disabled || !pickerReady || !session?.accessToken}
-      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+      className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors shadow-sm"
     >
       <DriveIcon />
       Import from Google Drive
