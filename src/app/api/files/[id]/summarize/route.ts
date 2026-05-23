@@ -44,7 +44,7 @@ export async function POST(
 
     const updated = await prisma.importedFile.update({
       where: { id: file.id },
-      data: { summary, processingStatus: "COMPLETE" },
+      data: { summary, processingStatus: "COMPLETE", processingError: null },
     });
 
     return NextResponse.json({ file: updated });

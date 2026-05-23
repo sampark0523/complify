@@ -9,6 +9,7 @@ export async function uploadToBlob(
     access: "private",
     contentType,
     addRandomSuffix: false,
+    allowOverwrite: true,
     token: process.env.BLOB_READ_WRITE_TOKEN,
   });
   return blob.url;

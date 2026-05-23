@@ -58,6 +58,7 @@ export async function POST(
       where: { id: file.id },
       data: {
         importStatus: "COMPLETE",
+        importError: null,
         cachedPath: blobUrl,
         cachedSize: buffer.length,
         driveModifiedTime: metadata.modifiedTime
