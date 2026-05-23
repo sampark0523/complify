@@ -138,26 +138,40 @@ function FileCard({
 
         {/* Action buttons */}
         <div className="flex items-center gap-1 shrink-0">
-          <button
-            onClick={onRefresh}
-            disabled={isBusy}
-            title="Refresh from Drive"
-            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            <svg className={`w-3.5 h-3.5 ${action === "refresh" ? "animate-spin" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-          </button>
-          <button
-            onClick={onRegenerate}
-            disabled={isBusy || !file.cachedPath}
-            title="Regenerate summary"
-            className="p-1.5 rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            <svg className={`w-3.5 h-3.5 ${action === "summarize" ? "animate-pulse" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </button>
+          <div className="relative group">
+            <button
+              onClick={onRefresh}
+              disabled={isBusy}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <svg className={`w-3.5 h-3.5 ${action === "refresh" ? "animate-spin" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+            <div className="absolute right-0 top-full mt-1.5 hidden group-hover:block z-10">
+              <div className="bg-gray-900 text-white text-xs rounded-lg px-2.5 py-1.5 whitespace-nowrap">
+                Re-download latest version from Drive
+                <div className="absolute -top-1 right-2.5 w-2 h-2 bg-gray-900 rotate-45" />
+              </div>
+            </div>
+          </div>
+          <div className="relative group">
+            <button
+              onClick={onRegenerate}
+              disabled={isBusy || !file.cachedPath}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <svg className={`w-3.5 h-3.5 ${action === "summarize" ? "animate-pulse" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </button>
+            <div className="absolute right-0 top-full mt-1.5 hidden group-hover:block z-10">
+              <div className="bg-gray-900 text-white text-xs rounded-lg px-2.5 py-1.5 whitespace-nowrap">
+                Regenerate AI summary
+                <div className="absolute -top-1 right-2.5 w-2 h-2 bg-gray-900 rotate-45" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -214,7 +228,7 @@ function FileCard({
         )}
         {file.lastSyncedAt && (
           <span className="text-xs text-gray-300">
-            Synced {new Date(file.lastSyncedAt).toLocaleDateString()}
+            Synced {new Date(file.lastSyncedAt).toLocaleString()}
           </span>
         )}
       </div>
