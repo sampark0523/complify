@@ -8,6 +8,19 @@ import { extractText } from "@/lib/extract";
 import { summarizeText } from "@/lib/openai";
 import { downloadFromBlob } from "@/lib/storage";
 
+function mimeTypeFromUrl(url: string): string | null {
+  const ext = url.split("?")[0].split(".").pop()?.toLowerCase();
+  const map: Record<string, string> = {
+    pdf: "application/pdf",
+    docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    csv: "text/csv",
+    txt: "text/plain",
+    md: "text/markdown",
+  };
+  return ext ? (map[ext] ?? null) : null;
+}
+
 export async function POST(
   _request: Request,
   { params }: { params: { id: string } }
@@ -39,7 +52,8 @@ export async function POST(
     });
 
     const buffer = await downloadFromBlob(file.cachedPath);
-    const text = await extractText(buffer, file.mimeType, file.name);
+    const cachedMimeType = mimeTypeFromUrl(file.cachedPath) ?? file.mimeType;
+    const text = await extractText(buffer, cachedMimeType, file.name);
     const summary = await summarizeText(text, file.name);
 
     const updated = await prisma.importedFile.update({
